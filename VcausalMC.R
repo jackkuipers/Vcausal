@@ -49,3 +49,8 @@ print(mean(M))
 print(sd(R))
 print(sd(M))
 
+# load R functions to compute theoretical variances
+source("Vcausalfns.R")
+# theoretical sd of causal estimators 
+print(sqrt(VarR(pX, pZ, pY, N)))
+print(sqrt(VarM(pX, pZ, pY, N)))
