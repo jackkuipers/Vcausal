@@ -69,3 +69,31 @@ VarM <- function(pX, pZ, pY, N, approx_sd = NULL) {
   M00 <- (M00part1 + M00part2 + M00part3)/N
   return(Cterm + M11 + M10 + M01 + M00)
 } 
+
+# this function computes the theoretical covariance of the M and R estimators
+CovMR <- function(pX, pZ, pY, N, approx_sd = NULL) {
+  ps <- compute_ps(pX, pZ, pY)
+  Cov1 <- (ps[5] + ps[7])*(ps[6] + ps[8])/pX^2 + (ps[1] + ps[3])*(ps[2] + ps[4])/(1-pX)^2;
+  Fpart1 <- (pY[4]*(1-pY[4])*pZ + pY[3]*(1-pY[3])*(1-pZ))*(1-pX)*naive_3F2(pX, N-1, approx_sd)
+  Fpart2 <- (pY[2]*(1-pY[2])*pZ + pY[1]*(1-pY[1])*(1-pZ))*pX*naive_3F2(1-pX, N-1, approx_sd)
+  Cov2 <- 2*(pZ - 1)*pZ*(pY[4]-pY[3])*(pY[2]-pY[1]);
+  return(Cov1/N + Fpart1 + Fpart2 + Cov2/N)
+} 
+
+# this function finds the best linear combination of the M and R estimators
+# based on their covariance
+find_alpha <- function(pX, pZ, pY, N, approx_sd = NULL) {
+  VR <- VarR(pX, pZ, pY, N, approx_sd)
+  VM <- VarM(pX, pZ, pY, N, approx_sd)
+  CMR <- CovMR(pX, pZ, pY, N, approx_sd)
+  alpha <- (VM - CMR) / (VM - CMR + VR - CMR)
+  Vmin <- alpha^2*VR + 2*alpha*(1-alpha)*CMR + (1-alpha)^2*VM
+  return(list(alpha = alpha, VR = VR, VM = VM, CMR = CMR, Vmin = Vmin))
+}
+
+find_alpha_v <- function(VR, VM, CMR) {
+  alpha <- (VM - CMR) / (VM - CMR + VR - CMR)
+  Vmin <- alpha^2*VR + 2*alpha*(1-alpha)*CMR + (1-alpha)^2*VM
+  return(list(alpha = alpha, VR = VR, VM = VM, CMR = CMR, Vmin = Vmin))
+}
+
