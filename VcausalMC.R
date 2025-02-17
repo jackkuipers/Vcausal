@@ -48,9 +48,21 @@ print(mean(M))
 # sd of causal estimators
 print(sd(R))
 print(sd(M))
+print(sqrt(cov(R,M)))
 
 # load R functions to compute theoretical variances
 source("Vcausalfns.R")
 # theoretical sd of causal estimators 
-print(sqrt(VarR(pX, pZ, pY, N)))
-print(sqrt(VarM(pX, pZ, pY, N)))
+opt <- find_alpha(pX, pZ, pY, N)
+print(sqrt(opt$VR))
+print(sqrt(opt$VM))
+print(sqrt(opt$CMR))
+
+# optimal combination parameter
+print(opt$alpha)
+# causal effect from optimal combination
+print(mean(opt$alpha*R + (1-opt$alpha)*M))
+# sd of combination
+print(sd(opt$alpha*R + (1-opt$alpha)*M))
+# theoretical optimum
+print(sqrt(opt$Vmin))
