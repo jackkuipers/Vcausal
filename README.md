@@ -5,4 +5,4 @@ The R file VcausalMC.R runs Monte Carlo simulations, while Vcausalfns.R and the 
 
 The code now also computes the covariance of the different causal estimators.
 
-Also included are the R files VcausalMC_fixedX.R and Vcausalfns_fixedX.R which run Monte Carlo simulations and compute the numerical results when X is fixed by block randomisation and the number of cases where it is 1 is predefined.
+Also included are the R files VcausalMC_fixedX.R and Vcausalfns_fixedX.R which run Monte Carlo simulations and compute the numerical results when X is fixed by block randomisation and the number of cases is predefined.
