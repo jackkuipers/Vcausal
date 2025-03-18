@@ -3,6 +3,6 @@ Code to compute the variance of causal estimators for binary v-structures to acc
 
 The R file VcausalMC.R runs Monte Carlo simulations, while Vcausalfns.R and the Maple file contain functions to compute the numerical result.
 
-The code now also computes the covariance of the different causal estimators.
+The R code now also computes the covariance of the different causal estimators.
 
 Also included are the R files VcausalMC_fixedX.R and Vcausalfns_fixedX.R which run Monte Carlo simulations and compute the numerical results when X is fixed by block randomisation and the number of cases is predefined.
